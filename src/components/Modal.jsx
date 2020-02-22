@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import './Modal.scss';
 
-const Modal = ({ isShowing, hide }) =>
+// Portals allow React components to render in another part of the DOM that is outside of their parent component.
+// Therefore, we can use a Portal to mount our Modal component to the end of the document.body element,
+// rather than as a child of another component.
+const Modal = ({ isShowing, hide, onOverlayClick }) =>
   isShowing
     ? ReactDOM.createPortal(
         <>
@@ -14,6 +17,9 @@ const Modal = ({ isShowing, hide }) =>
             aria-hidden
             tabIndex={-1}
             role="dialog"
+            onClick={event => {
+              onOverlayClick(event);
+            }}
           >
             <div className="modal modal-size-regular modal-animated modal-animation-fade-in">
               <div className="modal-content">
@@ -31,8 +37,9 @@ const Modal = ({ isShowing, hide }) =>
                 </div>
                 <div className="modal-body">
                   <div className="modal-body-text">
-                    This is the modal body. You can write whatever you want, or
-                    even pass in your own React component.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam.
                   </div>
                 </div>
                 <div className="modal-footer">
@@ -54,7 +61,8 @@ const Modal = ({ isShowing, hide }) =>
 
 Modal.propTypes = {
   isShowing: PropTypes.bool.isRequired,
-  hide: PropTypes.func.isRequired
+  hide: PropTypes.func.isRequired,
+  onOverlayClick: PropTypes.func.isRequired
 };
 
 export default Modal;

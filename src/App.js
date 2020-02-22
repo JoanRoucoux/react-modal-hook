@@ -4,13 +4,17 @@ import useModal from './hooks/useModal';
 import './App.scss';
 
 const App = () => {
-  const { isShowing, toggle } = useModal();
+  const { isShowing, handleOverlayClicked, toggleModal } = useModal();
   return (
     <div className="my-app">
-      <button className="button-default" onClick={toggle}>
+      <button className="button-default" onClick={toggleModal}>
         Show Modal
       </button>
-      <Modal isShowing={isShowing} hide={toggle} />
+      <Modal
+        hide={toggleModal}
+        isShowing={isShowing}
+        onOverlayClick={handleOverlayClicked}
+      />
     </div>
   );
 };
